@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- 모바일 반응형 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자동차 금융 견적 계산기</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="card">
+        <h1 class="title">자동차 금융 견적 계산기</h1>
+        <p class="subtitle">
+          차량 가격, 선납금, 기간, 이자율을 입력하면 예상 월 납입금을 계산합니다.
+        </p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="carPrice">차량 가격</label>
+            <input
+              id="carPrice"
+              type="number"
+              min="0"
+              value="30000000"
+              autocomplete="off"
+            />
+            <p class="error" data-error-for="carPrice"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="downPayment">선납금</label>
+            <input
+              id="downPayment"
+              type="number"
+              min="0"
+              value="5000000"
+              autocomplete="off"
+            />
+            <p class="error" data-error-for="downPayment"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="periodMonths">기간 (개월)</label>
+            <input
+              id="periodMonths"
+              type="number"
+              min="1"
+              value="36"
+              autocomplete="off"
+            />
+            <p class="error" data-error-for="periodMonths"></p>
+          </div>
+
+          <div class="form-group">
+            <label for="interestRate">연 이자율 (%)</label>
+            <input
+              id="interestRate"
+              type="number"
+              step="0.1"
+              min="0"
+              value="5.0"
+              autocomplete="off"
+            />
+            <p class="error" data-error-for="interestRate"></p>
+          </div>
+        </div>
+
+        <!-- 🔽 새로 추가: 상품 선택 + 금리 API 연동 -->
+        <div class="rate-row">
+          <div class="form-group">
+            <label for="productSelect">금융 상품 선택</label>
+            <select id="productSelect">
+              <option value="standard">일반 신용대출</option>
+              <option value="premium">우대 금리 상품</option>
+              <option value="lowCredit">중·저신용자 상품</option>
+            </select>
+          </div>
+          <button id="fetchRateBtn" class="primary-btn">
+            금리 불러오기 (API)
+          </button>
+        </div>
+        <p id="rateFetchStatus" class="helper-text"></p>
+        <!-- 🔼 여기까지 추가 -->
+
+        <div class="result-card">
+          <h2>예상 월 납입금</h2>
+          <p id="monthlyPayment" class="result-value">-</p>
+
+          <div class="result-detail">
+            <div>
+              <span class="label">대출 원금</span>
+              <span id="loanPrincipal" class="value">-</span>
+            </div>
+            <div>
+              <span class="label">기간</span>
+              <span id="periodLabel" class="value">-</span>
+            </div>
+            <div>
+              <span class="label">연 이자율</span>
+              <span id="interestLabel" class="value">-</span>
+            </div>
+          </div>
+
+          <p id="helperText" class="helper-text">
+            위 입력값을 올바르게 채우면 월 납입금이 자동으로 계산됩니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="view/LoanCalculatorView.js"></script>
+  </body>
+</html>
